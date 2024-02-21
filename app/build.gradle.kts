@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -13,6 +14,8 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "WEB_CLIENT_ID", project.properties["WEB_CLIENT_ID"].toString())
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -33,6 +36,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -44,4 +52,19 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Firebase Bom
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+
+    // Firebase analytics
+    implementation("com.google.firebase:firebase-analytics")
+
+    // Firebase auth
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Koin
+    implementation("io.insert-koin:koin-android:3.5.3")
+
+    // Google Play services
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 }

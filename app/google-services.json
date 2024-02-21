@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904041612038",
+    "project_id": "you-4506f",
+    "storage_bucket": "you-4506f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904041612038:android:a33690c66f145a53a75487",
+        "android_client_info": {
+          "package_name": "com.awesomepetprojects.seeyou"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoqtrBbXfshju4u8R5QwbZznzhU20yUPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
