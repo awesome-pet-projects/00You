@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in_with_google_text">Sign in with Google</string>
+    <string name="item_profile_photo_title">Profile photo</string>
+    <string name="message_photo_description">Message photo</string>
+    <string name="searchbar_hint">Searchbar hint</string>
 </resources>

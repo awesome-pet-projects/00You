@@ -34,20 +34,13 @@ class AuthFragment : Fragment() {
     }
 
     private val signInRequest by lazy {
-        BeginSignInRequest.builder()
-            .setPasswordRequestOptions(
-                BeginSignInRequest.PasswordRequestOptions.builder()
-                    .setSupported(true)
-                    .build()
-            )
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            .build()
+        BeginSignInRequest.builder().setPasswordRequestOptions(
+            BeginSignInRequest.PasswordRequestOptions.builder().setSupported(true).build()
+        ).setGoogleIdTokenRequestOptions(
+            BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
+                .setServerClientId(BuildConfig.WEB_CLIENT_ID).setFilterByAuthorizedAccounts(false)
+                .build()
+        ).build()
     }
 
     private val intentSenderLauncher =
@@ -62,9 +55,7 @@ class AuthFragment : Fragment() {
         }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAuthBinding.inflate(inflater, container, false)
         return binding.root
@@ -103,26 +94,27 @@ class AuthFragment : Fragment() {
         }
     }
 
-    private fun signIn(activity: FragmentActivity) =
-        oneTapClient.beginSignIn(signInRequest)
-            .addOnSuccessListener(activity) { result ->
-                try {
-                    val senderIntent = result.pendingIntent.intentSender
-                    val senderRequestIntent = IntentSenderRequest.Builder(senderIntent).build()
-                    intentSenderLauncher.launch(senderRequestIntent)
-                } catch (e: IntentSender.SendIntentException) {
-                    Log.e("SignIn", "Couldn't start One Tap UI: ${e.localizedMessage}")
-                }
+    private fun signIn(activity: FragmentActivity) {
+        oneTapClient.beginSignIn(signInRequest).addOnSuccessListener(activity) { result ->
+            try {
+                val senderIntent = result.pendingIntent.intentSender
+                val senderRequestIntent = IntentSenderRequest.Builder(senderIntent).build()
+                intentSenderLauncher.launch(senderRequestIntent)
+            } catch (e: IntentSender.SendIntentException) {
+                Log.e("SignIn", "Couldn't start One Tap UI: ${e.localizedMessage}")
             }
-            .addOnFailureListener(activity) { e ->
-                Log.d("SignIn", e.localizedMessage)
-            }
+        }.addOnFailureListener(activity) { e ->
+            Log.d("SignIn", e.localizedMessage)
+        }
+    }
 
-    private fun firebaseSignIn(credentials: AuthCredential, activity: FragmentActivity) =
-        firebaseAuth.signInWithCredential(credentials)
-            .addOnSuccessListener {
-                navigateToHomeFragment(activity)
-            }
+    private fun firebaseSignIn(credentials: AuthCredential, activity: FragmentActivity) {
+        firebaseAuth.signInWithCredential(credentials).addOnSuccessListener {
+            navigateToHomeFragment(activity)
+        }.addOnFailureListener { e ->
+            Log.d("SignIn", e.localizedMessage)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
